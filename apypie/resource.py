@@ -2,6 +2,11 @@ from __future__ import print_function, absolute_import
 
 from apypie.action import Action
 
+try:
+    from typing import Any
+except ImportError:
+    pass
+
 
 class Resource:
     """
@@ -9,6 +14,7 @@ class Resource:
     """
 
     def __init__(self, api, name):
+        # type: (Any, str) -> None
         self.api = api
         self.name = name
 
@@ -17,6 +23,7 @@ class Resource:
         return sorted([method['name'] for method in self.api.apidoc['docs']['resources'][self.name]['methods']])
 
     def action(self, name):
+        # type: (str) -> Action
         if self.has_action(name):
             return Action(name, self.name, self.api)
         else:
@@ -24,6 +31,7 @@ class Resource:
             raise KeyError(message)
 
     def has_action(self, name):
+        # type: (str) -> bool
         return name in self.actions
 
     def call(self, action, params={}, headers={}, options={}, data=None, files=None):

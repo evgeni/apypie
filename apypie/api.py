@@ -5,9 +5,9 @@ import glob
 import json
 import os
 try:
-    from urlparse import urljoin
+    from urlparse import urljoin  # type: ignore
 except ImportError:
-    from urllib.parse import urljoin
+    from urllib.parse import urljoin  # type: ignore
 import requests
 
 from apypie.resource import Resource

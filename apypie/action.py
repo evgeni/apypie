@@ -70,7 +70,7 @@ class Action:
         missing_params = required_params - given_params - given_files - given_data
         if missing_params:
             missing_params_with_path = [self._add_to_path(path, param) for param in missing_params]
-            message = "The following required parameters are missing: {}".format(', '.join(missing_params_with_path), path)
+            message = "The following required parameters are missing: {}".format(', '.join(missing_params_with_path))
             raise MissingArgumentsError(message)
 
         for param, value in values.items():

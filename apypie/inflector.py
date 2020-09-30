@@ -3,6 +3,11 @@
 
 import re
 
+try:
+    from typing import List, Tuple
+except ImportError:
+    pass
+
 
 class Inflections:
 
@@ -15,10 +20,12 @@ class Inflections:
         self.acronym_regex = r'/(?=a)b/'
 
     def acronym(self, word):
+        # type: (str) -> None
         self.acronyms[word.lower()] = word
         self.acronym_regex = '|'.join(self.acronyms.values())
 
     def plural(self, rule, replacement):
+        # type: (str, str) -> None
         if rule in self.uncountables:
             self.uncountables.remove(rule)
         if replacement in self.uncountables:
@@ -27,6 +34,7 @@ class Inflections:
         self.plurals.insert(0, (rule, replacement))
 
     def singular(self, rule, replacement):
+        # type: (str, str) -> None
         if rule in self.uncountables:
             self.uncountables.remove(rule)
         if replacement in self.uncountables:
@@ -35,6 +43,7 @@ class Inflections:
         self.singulars.insert(0, (rule, replacement))
 
     def irregular(self, singular, plural):
+        # type: (str, str) -> None
         if singular in self.uncountables:
             self.uncountables.remove(singular)
         if plural in self.uncountables:
@@ -67,12 +76,14 @@ class Inflections:
         self.uncountables.extend(words)
 
     def human(self, rule, replacement):
+        # type: (str, str) -> None
         self.humans.insert(0, (rule, replacement))
 
 
 class Inflector:
 
     def __init__(self):
+        # type: () -> None
         self.inflections = Inflections()
         self.inflections.plural(r'$', 's')
         self.inflections.plural(r'(?i)([sxz]|[cs]h)$', r'\1es')
@@ -96,12 +107,15 @@ class Inflector:
         self.inflections.uncountable('equipment', 'information', 'money', 'species', 'series', 'fish', 'sheep', 'police')
 
     def pluralize(self, word):
+        # type: (str) -> str
         return self._apply_inflections(word, self.inflections.plurals)
 
     def singularize(self, word):
+        # type: (str) -> str
         return self._apply_inflections(word, self.inflections.singulars)
 
     def _apply_inflections(self, word, rules):
+        # type: (str, List[Tuple[str, str]]) -> str
         result = word
 
         if word != '' and result.lower() not in self.inflections.uncountables:

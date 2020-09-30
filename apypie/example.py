@@ -10,6 +10,7 @@ class Example:
     """
 
     def __init__(self, http_method, path, args, status, response):
+        # type: (str, str, str, str, str) -> None
         self.http_method = http_method
         self.path = path
         self.args = args

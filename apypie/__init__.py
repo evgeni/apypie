@@ -8,4 +8,4 @@ from apypie.example import Example
 from apypie.param import Param
 from apypie.inflector import Inflector
 
-__all__ = [Api, Resource, Route, Action, Example, Param, Inflector]
+__all__ = ['Api', 'Resource', 'Route', 'Action', 'Example', 'Param', 'Inflector']
